@@ -7,6 +7,7 @@ import CoinCard from './CoinCard';
 import TrophyIcon from './icons/TrophyIcon';
 import CoinIcon from './icons/CoinIcon';
 import ChevronLeftIcon from './icons/ChevronLeftIcon';
+import RecentPurchases from './RecentPurchases';
 
 interface StoreProps {
   onBuyItem: (item: StoreItem) => void;
@@ -38,7 +39,7 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
       </div>
 
       <motion.div 
-        className="text-center mb-16"
+        className="text-center mb-12"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -51,6 +52,7 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
         </p>
       </motion.div>
 
+      <RecentPurchases />
 
       <motion.section 
         id="ranks"
@@ -63,7 +65,7 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
           <TrophyIcon />
           Player Ranks
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {RANKS.map((rank) => (
             <RankCard key={rank.name} rank={rank} onBuy={onBuyItem} />
           ))}

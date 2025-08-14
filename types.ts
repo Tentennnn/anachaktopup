@@ -18,3 +18,10 @@ export interface CoinPackage {
 }
 
 export type StoreItem = Rank | CoinPackage;
+
+export interface RecentPurchase {
+  _id: string;
+  username: string;
+  item: string;
+  createdAt: string; // ISO date string
+}

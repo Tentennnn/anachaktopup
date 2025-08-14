@@ -18,10 +18,7 @@ const RankCard: React.FC<RankCardProps> = ({ rank, onBuy }) => {
   return (
     <motion.div
       variants={cardVariants}
-      className={`
-        ${isHighlighted ? 'md:col-span-2 xl:col-span-2' : ''}
-        relative h-full
-      `}
+      className="relative h-full"
     >
       <motion.div
         whileHover={{ scale: 1.02 }}

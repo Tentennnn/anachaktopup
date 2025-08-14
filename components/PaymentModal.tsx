@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion, Variants } from 'framer-motion';
-import { StoreItem } from '../types';
+import { StoreItem, RecentPurchase } from '../types';
 import XMarkIcon from './icons/XMarkIcon';
 
 interface PaymentModalProps {
@@ -58,7 +58,7 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ item, onClose, discordWebho
     const formData = new FormData();
     const payload = {
       username: "ANACHAK Store Bot",
-      avatar_url: "https://i.imgur.com/T1h2a2o.png",
+      avatar_url: "https://i.postimg.cc/fL4fSPVf/minecraft-title2.png",
       embeds: [{
         title: "New Purchase Submission",
         color: 0x9fe870,
@@ -85,6 +85,32 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ item, onClose, discordWebho
         throw new Error(`Failed to submit form. Discord API responded with ${response.status}.`);
       }
       setStatus('success');
+
+      // --- SIMULATE DATABASE ENTRY ---
+      // In a real app, your backend would save this to MongoDB.
+      // Here, we save to localStorage to make the UI feel live.
+      const purchaseData: Omit<RecentPurchase, '_id' | 'createdAt'> = {
+        username: minecraftUsername,
+        item: item.name,
+      };
+
+      const storedPurchases = localStorage.getItem('recentPurchases');
+      let purchases: RecentPurchase[] = storedPurchases ? JSON.parse(storedPurchases) : [];
+      
+      const newPurchase: RecentPurchase = {
+        ...purchaseData,
+        _id: new Date().getTime().toString(), // Use timestamp for a simple unique ID
+        createdAt: new Date().toISOString(),
+      };
+
+      purchases.unshift(newPurchase); // Add new purchase to the top
+      purchases = purchases.slice(0, 10); // Keep the list to a max of 10 items
+      
+      localStorage.setItem('recentPurchases', JSON.stringify(purchases));
+      
+      // Notify other components (like RecentPurchases) that new data is available
+      window.dispatchEvent(new Event('purchaseCompleted'));
+
     } catch (err: any) {
       setErrorMessage(err.message || 'An unknown error occurred. Please contact support.');
       setStatus('error');
