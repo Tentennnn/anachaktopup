@@ -17,12 +17,14 @@ const App: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [selectedItem, setSelectedItem] = useState<StoreItem | null>(null);
   const [config, setConfig] = useState<AppConfig>({});
+  const [isConfigLoading, setIsConfigLoading] = useState(true);
 
   useEffect(() => {
     fetch('/metadata.json')
       .then(response => response.json())
       .then(data => setConfig(data))
-      .catch(error => console.error("Error fetching configuration:", error));
+      .catch(error => console.error("Error fetching configuration:", error))
+      .finally(() => setIsConfigLoading(false));
   }, []);
 
 
@@ -47,7 +49,7 @@ const App: React.FC = () => {
             transition={{ duration: 0.3 }}
           >
             {currentPage === 'home' && <Hero onGoToStore={() => setCurrentPage('store')} />}
-            {currentPage === 'store' && <Store onBuyItem={handleBuyItem} onGoToHome={() => setCurrentPage('home')} />}
+            {currentPage === 'store' && <Store onBuyItem={handleBuyItem} onGoToHome={() => setCurrentPage('home')} isStoreReady={!isConfigLoading} />}
           </motion.div>
         </AnimatePresence>
       </main>

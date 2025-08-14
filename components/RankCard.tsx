@@ -5,6 +5,7 @@ import { Rank } from '../types';
 interface RankCardProps {
   rank: Rank;
   onBuy: (rank: Rank) => void;
+  isStoreReady: boolean;
 }
 
 const cardVariants = {
@@ -12,7 +13,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 
-const RankCard: React.FC<RankCardProps> = ({ rank, onBuy }) => {
+const RankCard: React.FC<RankCardProps> = ({ rank, onBuy, isStoreReady }) => {
   const isHighlighted = rank.highlighted;
 
   return (
@@ -53,11 +54,12 @@ const RankCard: React.FC<RankCardProps> = ({ rank, onBuy }) => {
           
           <motion.button
             onClick={() => onBuy(rank)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-8 w-full bg-brand text-black font-bold font-pixel tracking-wider text-lg py-3 px-4 rounded-md hover:bg-brand-dark transition-colors"
+            disabled={!isStoreReady}
+            whileHover={{ scale: isStoreReady ? 1.05 : 1 }}
+            whileTap={{ scale: isStoreReady ? 0.95 : 1 }}
+            className={`mt-8 w-full bg-brand text-black font-bold font-pixel tracking-wider text-lg py-3 px-4 rounded-md transition-colors ${isStoreReady ? 'hover:bg-brand-dark' : 'opacity-50 cursor-not-allowed'}`}
           >
-            PURCHASE
+            {isStoreReady ? 'PURCHASE' : 'LOADING...'}
           </motion.button>
         </div>
       </motion.div>

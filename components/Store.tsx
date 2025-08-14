@@ -12,6 +12,7 @@ import RecentPurchases from './RecentPurchases';
 interface StoreProps {
   onBuyItem: (item: StoreItem) => void;
   onGoToHome: () => void;
+  isStoreReady: boolean;
 }
 
 const sectionVariants = {
@@ -25,7 +26,7 @@ const sectionVariants = {
   },
 };
 
-const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
+const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome, isStoreReady }) => {
   return (
     <div>
       <div className="mb-8">
@@ -67,7 +68,7 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 items-stretch">
           {RANKS.map((rank) => (
-            <RankCard key={rank.name} rank={rank} onBuy={onBuyItem} />
+            <RankCard key={rank.name} rank={rank} onBuy={onBuyItem} isStoreReady={isStoreReady} />
           ))}
         </div>
       </motion.section>
@@ -85,7 +86,7 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {COINS.map((coinPkg) => (
-            <CoinCard key={coinPkg.name} coinPackage={coinPkg} onBuy={onBuyItem} />
+            <CoinCard key={coinPkg.name} coinPackage={coinPkg} onBuy={onBuyItem} isStoreReady={isStoreReady} />
           ))}
         </div>
       </motion.section>

@@ -5,6 +5,7 @@ import { CoinPackage } from '../types';
 interface CoinCardProps {
   coinPackage: CoinPackage;
   onBuy: (pkg: CoinPackage) => void;
+  isStoreReady: boolean;
 }
 
 const cardVariants = {
@@ -12,7 +13,7 @@ const cardVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 };
 
-const CoinCard: React.FC<CoinCardProps> = ({ coinPackage, onBuy }) => {
+const CoinCard: React.FC<CoinCardProps> = ({ coinPackage, onBuy, isStoreReady }) => {
   const isHighlighted = coinPackage.highlighted;
 
   return (
@@ -50,11 +51,12 @@ const CoinCard: React.FC<CoinCardProps> = ({ coinPackage, onBuy }) => {
 
           <motion.button
             onClick={() => onBuy(coinPackage)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="mt-6 w-full bg-yellow-400 text-black font-bold font-pixel tracking-wider text-lg py-3 px-4 rounded-md hover:bg-yellow-500 transition-colors"
+            disabled={!isStoreReady}
+            whileHover={{ scale: isStoreReady ? 1.05 : 1 }}
+            whileTap={{ scale: isStoreReady ? 0.95 : 1 }}
+            className={`mt-6 w-full bg-yellow-400 text-black font-bold font-pixel tracking-wider text-lg py-3 px-4 rounded-md transition-colors ${isStoreReady ? 'hover:bg-yellow-500' : 'opacity-50 cursor-not-allowed'}`}
           >
-            PURCHASE
+            {isStoreReady ? 'PURCHASE' : 'LOADING...'}
           </motion.button>
         </div>
       </motion.div>
