@@ -4,6 +4,7 @@ export interface Rank {
   price: number;
   features: string[];
   imageUrl: string;
+  highlighted?: boolean;
 }
 
 export interface CoinPackage {
@@ -13,6 +14,7 @@ export interface CoinPackage {
   price: number;
   bonus?: string;
   imageUrl: string;
+  highlighted?: boolean;
 }
 
 export type StoreItem = Rank | CoinPackage;

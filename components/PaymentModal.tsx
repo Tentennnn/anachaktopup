@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { StoreItem } from '../types';
 import XMarkIcon from './icons/XMarkIcon';
 
@@ -11,12 +11,12 @@ interface PaymentModalProps {
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
-const backdropVariants = {
+const backdropVariants: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
 };
 
-const modalVariants = {
+const modalVariants: Variants = {
   hidden: { opacity: 0, scale: 0.9, y: 50 },
   visible: { opacity: 1, scale: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
   exit: { opacity: 0, scale: 0.9, y: 50 },
@@ -168,6 +168,9 @@ const PaymentModal: React.FC<PaymentModalProps> = ({ item, onClose, discordWebho
       <motion.div
         className="bg-gray-800/80 backdrop-blur-sm rounded-lg shadow-xl p-6 max-w-md w-full relative border border-brand/50"
         variants={modalVariants}
+        initial="hidden"
+        animate="visible"
+        exit="exit"
         onClick={(e) => e.stopPropagation()}
       >
         {status !== 'loading' && (

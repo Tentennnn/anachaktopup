@@ -14,10 +14,9 @@ interface StoreProps {
 }
 
 const sectionVariants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0 },
   visible: { 
-    opacity: 1, 
-    y: 0,
+    opacity: 1,
     transition: { 
       duration: 0.5,
       staggerChildren: 0.1,
@@ -38,27 +37,33 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
         </button>
       </div>
 
-      <motion.h1 
-        className="text-4xl font-pixel font-bold text-center text-white mb-12"
+      <motion.div 
+        className="text-center mb-16"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Server Store
-      </motion.h1>
+        <h1 className="text-5xl sm:text-6xl font-pixel font-bold text-white tracking-wider">
+          Server Store
+        </h1>
+        <p className="text-gray-300 mt-4 max-w-2xl mx-auto">
+          Unlock exclusive perks and get ahead in the game. All purchases directly support the server's development and maintenance.
+        </p>
+      </motion.div>
+
 
       <motion.section 
         id="ranks"
         variants={sectionVariants}
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, amount: 0.2 }}
+        animate="visible"
+        className="mb-24"
       >
-        <h2 className="flex items-center justify-center md:justify-start gap-3 text-3xl font-pixel font-bold text-brand mb-8">
+        <h2 className="flex items-center justify-center gap-3 text-3xl font-pixel font-bold text-brand mb-10">
           <TrophyIcon />
-          Ranks
+          Player Ranks
         </h2>
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch">
           {RANKS.map((rank) => (
             <RankCard key={rank.name} rank={rank} onBuy={onBuyItem} />
           ))}
@@ -67,17 +72,16 @@ const Store: React.FC<StoreProps> = ({ onBuyItem, onGoToHome }) => {
 
       <motion.section 
         id="coins" 
-        className="mt-20"
         variants={sectionVariants}
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
       >
-        <h2 className="flex items-center justify-center md:justify-start gap-3 text-3xl font-pixel font-bold text-brand mb-8">
+        <h2 className="flex items-center justify-center gap-3 text-3xl font-pixel font-bold text-brand mb-10">
           <CoinIcon />
-          Coins
+          Coin Packages
         </h2>
-        <div className="flex flex-wrap justify-center gap-x-8 gap-y-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 items-stretch">
           {COINS.map((coinPkg) => (
             <CoinCard key={coinPkg.name} coinPackage={coinPkg} onBuy={onBuyItem} />
           ))}
