@@ -7,6 +7,7 @@ interface HeroProps {
   onGoToStore: () => void;
   serverName: string;
   serverIP: string;
+  serverDescription: string;
 }
 
 interface ServerStatus {
@@ -39,7 +40,7 @@ const itemVariants = {
 };
 
 
-const Hero: React.FC<HeroProps> = ({ onGoToStore, serverName, serverIP }) => {
+const Hero: React.FC<HeroProps> = ({ onGoToStore, serverName, serverIP, serverDescription }) => {
   const [ipCopied, setIpCopied] = useState(false);
   const [serverStatus, setServerStatus] = useState<ServerStatus | null>(null);
   const [isLoadingStatus, setIsLoadingStatus] = useState(true);
@@ -133,7 +134,7 @@ const Hero: React.FC<HeroProps> = ({ onGoToStore, serverName, serverIP }) => {
         {serverName}
       </motion.h1>
       <motion.p {...{ variants: itemVariants }} className="mt-4 text-base md:text-xl text-gray-300 max-w-2xl mx-auto">
-        Your new favorite Minecraft server. Join our community for unique survival adventures and challenges.
+        {serverDescription}
       </motion.p>
       <motion.p {...{ variants: itemVariants }} className="mt-2 text-md text-gray-400">
         Minecraft Version: 1.21.7+

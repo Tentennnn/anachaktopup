@@ -23,6 +23,7 @@ const App: React.FC = () => {
   // General site settings
   const [serverName, setServerName] = useState(() => localStorage.getItem('serverName') || 'ANACHAK-MC');
   const [serverIP, setServerIP] = useState(() => localStorage.getItem('serverIP') || 'mc.anachak.xyz');
+  const [serverDescription, setServerDescription] = useState(() => localStorage.getItem('serverDescription') || 'Your new favorite Minecraft server. Join our community for unique survival adventures and challenges.');
   const [themeColor, setThemeColor] = useState(() => localStorage.getItem('themeColor') || '#9fe870');
 
   const [ranks, setRanks] = useState<Rank[]>(() => {
@@ -60,6 +61,10 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('serverIP', serverIP);
   }, [serverIP]);
+  
+  useEffect(() => {
+    localStorage.setItem('serverDescription', serverDescription);
+  }, [serverDescription]);
 
   useEffect(() => {
     localStorage.setItem('themeColor', themeColor);
@@ -91,7 +96,7 @@ const App: React.FC = () => {
   const renderPage = () => {
     switch (currentPage) {
       case 'home':
-        return <Hero onGoToStore={() => setCurrentPage('store')} serverName={serverName} serverIP={serverIP} />;
+        return <Hero onGoToStore={() => setCurrentPage('store')} serverName={serverName} serverIP={serverIP} serverDescription={serverDescription} />;
       case 'store':
         return <Store ranks={ranks} coins={coins} onBuyItem={handleBuyItem} onGoToHome={() => setCurrentPage('home')} isStoreReady={true} isStoreConfigured={isStoreConfigured} />;
       case 'admin':
@@ -110,11 +115,13 @@ const App: React.FC = () => {
                   setServerName={setServerName}
                   serverIP={serverIP}
                   setServerIP={setServerIP}
+                  serverDescription={serverDescription}
+                  setServerDescription={setServerDescription}
                   themeColor={themeColor}
                   setThemeColor={setThemeColor}
                 />;
       default:
-        return <Hero onGoToStore={() => setCurrentPage('store')} serverName={serverName} serverIP={serverIP} />;
+        return <Hero onGoToStore={() => setCurrentPage('store')} serverName={serverName} serverIP={serverIP} serverDescription={serverDescription} />;
     }
   }
 

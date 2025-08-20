@@ -19,6 +19,8 @@ interface AdminPanelProps {
   setServerName: React.Dispatch<React.SetStateAction<string>>;
   serverIP: string;
   setServerIP: React.Dispatch<React.SetStateAction<string>>;
+  serverDescription: string;
+  setServerDescription: React.Dispatch<React.SetStateAction<string>>;
   themeColor: string;
   setThemeColor: React.Dispatch<React.SetStateAction<string>>;
 }
@@ -35,6 +37,8 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   setServerName,
   serverIP,
   setServerIP,
+  serverDescription,
+  setServerDescription,
   themeColor,
   setThemeColor,
 }) => {
@@ -44,14 +48,16 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   // Local state for general settings form
   const [localServerName, setLocalServerName] = useState(serverName);
   const [localServerIP, setLocalServerIP] = useState(serverIP);
+  const [localServerDescription, setLocalServerDescription] = useState(serverDescription);
   const [localThemeColor, setLocalThemeColor] = useState(themeColor);
   const [isSaved, setIsSaved] = useState(false);
 
-  const hasUnsavedChanges = localServerName !== serverName || localServerIP !== serverIP || localThemeColor !== themeColor;
+  const hasUnsavedChanges = localServerName !== serverName || localServerIP !== serverIP || localThemeColor !== themeColor || localServerDescription !== serverDescription;
 
   const handleSaveSettings = () => {
     setServerName(localServerName);
     setServerIP(localServerIP);
+    setServerDescription(localServerDescription);
     setThemeColor(localThemeColor);
     setIsSaved(true);
     setTimeout(() => setIsSaved(false), 2500);
@@ -60,6 +66,7 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
   const handleResetSettings = () => {
     setLocalServerName(serverName);
     setLocalServerIP(serverIP);
+    setLocalServerDescription(serverDescription);
     setLocalThemeColor(themeColor);
   };
 
@@ -170,6 +177,10 @@ const AdminPanel: React.FC<AdminPanelProps> = ({
               <div>
                 <label htmlFor="serverIP" className="block text-sm font-medium text-gray-300 mb-1">Server IP</label>
                 <input type="text" id="serverIP" value={localServerIP} onChange={e => setLocalServerIP(e.target.value)} className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 focus:ring-brand focus:border-brand" />
+              </div>
+               <div>
+                <label htmlFor="serverDescription" className="block text-sm font-medium text-gray-300 mb-1">Server Description</label>
+                <textarea id="serverDescription" rows={3} value={localServerDescription} onChange={e => setLocalServerDescription(e.target.value)} className="w-full bg-gray-900 border border-gray-700 rounded-md px-3 py-2 focus:ring-brand focus:border-brand" />
               </div>
               <div>
                 <label htmlFor="themeColor" className="block text-sm font-medium text-gray-300 mb-1">Brand Color</label>
