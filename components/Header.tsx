@@ -8,9 +8,10 @@ interface HeaderProps {
   setCurrentPage: (page: Page) => void;
   currentPage: Page;
   serverName: string;
+  serverIconUrl: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ setCurrentPage, currentPage, serverName }) => {
+const Header: React.FC<HeaderProps> = ({ setCurrentPage, currentPage, serverName, serverIconUrl }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const NavLink: React.FC<{ page: Page, children: React.ReactNode }> = ({ page, children }) => {
@@ -39,8 +40,12 @@ const Header: React.FC<HeaderProps> = ({ setCurrentPage, currentPage, serverName
         <div className="flex items-center justify-between h-20">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <div className="w-12 h-12 bg-gray-700 rounded-md flex items-center justify-center font-pixel text-brand text-2xl">
-                {serverName.charAt(0).toUpperCase()}
+              <div className="w-12 h-12 bg-gray-700 rounded-md flex items-center justify-center font-pixel text-brand text-2xl overflow-hidden">
+                {serverIconUrl ? (
+                  <img src={serverIconUrl} alt={`${serverName} icon`} className="w-full h-full object-cover" />
+                ) : (
+                  serverName.charAt(0).toUpperCase()
+                )}
               </div>
             </div>
             <div className="ml-4">

@@ -12,11 +12,12 @@
       :root {
         --color-brand: #9fe870;
         --color-brand-dark: #8ade59;
+        --background-image-url: url('https://www.minecraft.net/content/dam/games/minecraft/community/minecraft-snapshot-24w13a-header.png');
       }
       body {
         font-family: 'Inter', sans-serif;
         background-color: #111827; /* Fallback background */
-        background-image: url('https://www.minecraft.net/content/dam/games/minecraft/community/minecraft-snapshot-24w13a-header.png');
+        background-image: var(--background-image-url);
         background-size: cover;
         background-position: center;
         background-attachment: fixed;

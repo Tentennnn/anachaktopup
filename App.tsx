@@ -12,6 +12,7 @@ import { StoreItem, Rank, CoinPackage } from './types';
 import { config } from './config';
 import { INITIAL_RANKS, INITIAL_COINS } from './constants';
 import ThemeManager from './components/ThemeManager';
+import BackgroundManager from './components/BackgroundManager';
 
 type Page = 'home' | 'store' | 'admin';
 
@@ -25,6 +26,9 @@ const App: React.FC = () => {
   const [serverIP, setServerIP] = useState(() => localStorage.getItem('serverIP') || 'mc.anachak.xyz');
   const [serverDescription, setServerDescription] = useState(() => localStorage.getItem('serverDescription') || 'Your new favorite Minecraft server. Join our community for unique survival adventures and challenges.');
   const [themeColor, setThemeColor] = useState(() => localStorage.getItem('themeColor') || '#9fe870');
+  const [serverIconUrl, setServerIconUrl] = useState(() => localStorage.getItem('serverIconUrl') || 'https://i.postimg.cc/fL4fSPVf/minecraft-title2.png');
+  const [backgroundImageUrl, setBackgroundImageUrl] = useState(() => localStorage.getItem('backgroundImageUrl') || 'https://www.minecraft.net/content/dam/games/minecraft/community/minecraft-snapshot-24w13a-header.png');
+
 
   const [ranks, setRanks] = useState<Rank[]>(() => {
     try {
@@ -69,6 +73,14 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('themeColor', themeColor);
   }, [themeColor]);
+
+  useEffect(() => {
+    localStorage.setItem('serverIconUrl', serverIconUrl);
+  }, [serverIconUrl]);
+
+  useEffect(() => {
+    localStorage.setItem('backgroundImageUrl', backgroundImageUrl);
+  }, [backgroundImageUrl]);
 
   useEffect(() => {
     localStorage.setItem('storeDisabledByAdmin', JSON.stringify(isStoreDisabledByAdmin));
@@ -119,6 +131,10 @@ const App: React.FC = () => {
                   setServerDescription={setServerDescription}
                   themeColor={themeColor}
                   setThemeColor={setThemeColor}
+                  serverIconUrl={serverIconUrl}
+                  setServerIconUrl={setServerIconUrl}
+                  backgroundImageUrl={backgroundImageUrl}
+                  setBackgroundImageUrl={setBackgroundImageUrl}
                 />;
       default:
         return <Hero onGoToStore={() => setCurrentPage('store')} serverName={serverName} serverIP={serverIP} serverDescription={serverDescription} />;
@@ -128,7 +144,8 @@ const App: React.FC = () => {
   return (
     <div className="text-white min-h-screen flex flex-col">
       <ThemeManager color={themeColor} />
-      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} serverName={serverName} />
+      <BackgroundManager imageUrl={backgroundImageUrl} />
+      <Header currentPage={currentPage} setCurrentPage={setCurrentPage} serverName={serverName} serverIconUrl={serverIconUrl} />
       <main className="flex-grow container mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <AnimatePresence mode="wait">
           <motion.div
